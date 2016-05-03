@@ -43,6 +43,10 @@ class Movie(db.Model):
     released_at = db.Column(db.DateTime, nullable=True)
     imdb_url = db.Column(db.String(200), nullable=True)
 
+    def __repr__(self):
+
+        return "<Movie movie_id={} title={}>".format(self.movie_id, self.title)
+
 
 class Rating(db.Model):
     """Ratings of movies by users."""
@@ -53,6 +57,13 @@ class Rating(db.Model):
     movie_id = db.Column(db.Integer, nullable=False)
     user_id = db.Column(db.Integer, nullable=False)
     score = db.Column(db.Integer, nullable=False)
+
+    def __repr__(self):
+
+        return "<Rating rating_id={}, movie_id={}, user_id={}, score={}>".format(self.rating_id,
+                                                                                 self. movie_id, 
+                                                                                 self.user_id, 
+                                                                                 self.score)
 
 
 ##############################################################################

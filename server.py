@@ -3,7 +3,7 @@
 from jinja2 import StrictUndefined
 
 from flask import Flask
-from flask_debugtoolbar import DebugToolbarExtension
+# from flask_debugtoolbar import DebugToolbarExtension
 
 from model import connect_to_db, db
 
@@ -33,6 +33,6 @@ if __name__ == "__main__":
     connect_to_db(app)
 
     # Use the DebugToolbar
-    DebugToolbarExtension(app)
+    # DebugToolbarExtension(app)
 
     app.run()

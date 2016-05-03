@@ -86,18 +86,18 @@ def load_ratings():
         row = row.rstrip()
         rating_info = row.split("\t")
 
+        #unpacking rating_info
         user_id, movie_id, score, timestamp = rating_info
-        # print "user id", user_id
-        # print "movie_id", movie_id
-        # print score
-        # print timestamp
 
+        #instantiating rating
         rating = Rating(user_id=user_id, 
                         movie_id=movie_id,
                         score=score)
 
+        #add to database
         db.session.add(rating)
 
+    #committing to database
     db.session.commit()
 
 
