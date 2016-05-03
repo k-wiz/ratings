@@ -27,6 +27,8 @@ def load_users():
         row = row.rstrip()
         user_id, age, gender, occupation, zipcode = row.split("|")
 
+        user_id = int(user_id)
+        
         user = User(user_id=user_id,
                     age=age,
                     zipcode=zipcode)
@@ -47,13 +49,11 @@ def load_movies():
 
     for row in open("seed_data/u.item"):
         row = row.rstrip()
-        movie_info = row.split("|")
+        #unpack and cut off genres
+        movie_id, title, released_at, junk, imdb_url = row.split("|")[:5]
 
-        movie_id = int(movie_info[0])
-        title = movie_info[1] 
-        title = title[:-6] # removed date
-        released_at = movie_info[2]
-        imdb_url = movie_info[4]
+        movie_id = int(movie_id) 
+        title = title[:-7] # removed date
         imdb_url = imdb_url[:-6] #removed date
 
         #converting into datetime object
@@ -88,6 +88,10 @@ def load_ratings():
 
         #unpacking rating_info
         user_id, movie_id, score, timestamp = rating_info
+
+        user_id = int(user_id)
+        movie_id = int(movie_id)
+        score = int(score)
 
         #instantiating rating
         rating = Rating(user_id=user_id, 
