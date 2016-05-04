@@ -70,6 +70,8 @@ class Rating(db.Model):
                                                                                  self. movie_id, 
                                                                                  self.user_id, 
                                                                                  self.score)
+    
+
 
 
 ##############################################################################
