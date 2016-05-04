@@ -3,7 +3,7 @@
 from jinja2 import StrictUndefined
 
 from flask import Flask, render_template, redirect, request, flash, session
-# from flask_debugtoolbar import DebugToolbarExtension
+from flask_debugtoolbar import DebugToolbarExtension
 
 from model import connect_to_db, db, User, Rating, Movie
 
@@ -49,20 +49,25 @@ def verify_register():
     password = request.form.get("password")
 
     #username is user object
-    username = User.query.filter_by(email=username).first()
+    user_object = User.query.filter_by(email=username).first()
 
     # if the user doesn't exist, add to db
-    if username.email == None:
+    if user_object == None:
         new_user = User(email=username, password=password)
         db.session.add(new_user)
         db.session.commit()
 
-    else:
-        pass
+        # TODO: uncomment to add message
+    #     return render_template("test.html",
+    #                         username=username,
+    #                         password=password)
 
-    return render_template("test.html",
-                            username=username,
-                            password=password)
+    # else:
+
+    #     #add alert -- You're already registered! 
+
+    return redirect('/login')
+    
 
 @app.route('/login')
 def login():
@@ -70,25 +75,42 @@ def login():
 
     return render_template("login.html")
 
-# @app.route('/verify-login', methods=["POST"])
-# def verify_login():
+@app.route('/verify-login', methods=["POST"])
+def verify_login():
 
-#     username = request.form.get("username")
-#     password = request.form.get("password")
+    username = request.form.get("username")
+    password = request.form.get("password")
 
-#     username = User.query.filter_by(email=username).first()
+    user_object = User.query.filter_by(email=username).first()
 
-#     if username.email:
+    #if username exists in database
+    if user_object:
 
-#         #login
-#         #get user_id 
-#         #add user id to session
-#         #redirect to homepage
+        #if given password matches database password for username
+        if password == user_object.password:
 
-#     else:
+            # adding to session {"user_id":the actual user id}
+            session["user_id"] = user_object.user_id
+            print session
 
-#         #message you're not registered
-#         #redirect to registration page
+            # Add Flash message: "Logged in" on base.html
+            flash("Logged in")
+
+            #redirect to homepage
+            return redirect('/')
+
+        #if password doesn't match
+        else:
+
+            #message password is incorrect
+            return redirect('/login')
+
+
+    else:
+
+        #message you're not registered
+        #redirect to registration page
+        return redirect('/register')
 
 
 
@@ -106,6 +128,6 @@ if __name__ == "__main__":
     connect_to_db(app)
 
     # Use the DebugToolbar
-    # DebugToolbarExtension(app)
+    DebugToolbarExtension(app)
 
     app.run()
