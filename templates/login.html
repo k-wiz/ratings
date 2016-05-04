@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<form action="/verify-login" method="POST">
+    Username/Email: <input type="text" name="username"></br></br>
+    Password: <input type="text" name="password">
+
+</form> 
+
+{% endblock %}
