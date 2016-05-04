@@ -56,13 +56,13 @@ def verify_register():
         new_user = User(email=username, password=password)
         db.session.add(new_user)
         db.session.commit()
-        #alert message - you're registered.
 
     else:
-        #alert message - you're already registered.
         pass
 
-    return redirect("/login")
+    return render_template("test.html",
+                            username=username,
+                            password=password)
 
 @app.route('/login')
 def login():
@@ -70,25 +70,25 @@ def login():
 
     return render_template("login.html")
 
-@app.route('/verify-login', methods=["POST"])
-def verify_login():
+# @app.route('/verify-login', methods=["POST"])
+# def verify_login():
 
-    username = request.form.get("username")
-    password = request.form.get("password")
+#     username = request.form.get("username")
+#     password = request.form.get("password")
 
-    username = User.query.filter_by(email=username).first()
+#     username = User.query.filter_by(email=username).first()
 
-    if username.email:
+#     if username.email:
 
-        #login
-        #get user_id 
-        #add user id to session
-        #redirect to homepage
+#         #login
+#         #get user_id 
+#         #add user id to session
+#         #redirect to homepage
 
-    else:
+#     else:
 
-        #message you're not registered
-        #redirect to registration page
+#         #message you're not registered
+#         #redirect to registration page
 
 
 
