@@ -7,11 +7,13 @@
 <body>
   Ratings
   <hr>
-  <ul class=flashes>
+<!--   <ul class=flashes> -->
+  <div>
     {% for message in get_flashed_messages() %}
-        <li>{{ message }}</li>
+        <br><br><b>{{ message }}</b>
     {% endfor %}
-  </ul>
+  </div>
+<!--   </ul> -->
 
   {% block content %} put your content here {% endblock %}
 

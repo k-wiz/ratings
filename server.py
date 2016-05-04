@@ -57,14 +57,10 @@ def verify_register():
         db.session.add(new_user)
         db.session.commit()
 
-        # TODO: uncomment to add message
-    #     return render_template("test.html",
-    #                         username=username,
-    #                         password=password)
+        flash("Thanks for registering!")
 
-    # else:
-
-    #     #add alert -- You're already registered! 
+    else:
+        flash("You're already registered!")
 
     return redirect('/login')
     
@@ -94,30 +90,33 @@ def verify_login():
             print session
 
             # Add Flash message: "Logged in" on base.html
-            flash("Logged in")
+            flash("Thanks for logging in!")
 
             #redirect to homepage
             return redirect('/')
 
         #if password doesn't match
         else:
+            flash("Incorrect password. Please try again.")
 
             #message password is incorrect
             return redirect('/login')
 
-
     else:
+        flash("You're not registered. Please register here")
 
-        #message you're not registered
         #redirect to registration page
         return redirect('/register')
 
 
+@app.route('/logout')
+def logout():
 
+    del session['user_id']
+    print session
 
-
-
-
+    flash("You've been logged out.")
+    return redirect('/')
 
 
 if __name__ == "__main__":
