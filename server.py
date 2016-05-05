@@ -146,13 +146,10 @@ def user_info(user_id):
                             rating_objects=rating_objects
                             )
 
-@app.route('/movies/<title>')
-def movie_info(title):
+@app.route('/movies/<movie_id>')
+def movie_info(movie_id):
 
-    print "got here!"
-    movie_object = Movie.query.filter_by(title=title)
-    print movie_object
-    # movie_object = Movie.query.get(movie_id)
+    movie_object = Movie.query.get(movie_id)
 
      # list of rating objects for a particular movie
     rating_objects = movie_object.ratings
