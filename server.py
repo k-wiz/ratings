@@ -139,21 +139,11 @@ def user_info(user_id):
     zipcode = user_object.zipcode
 
     rating_objects = user_object.ratings
-    # [<rating object>,<rating object>,<rating object>]
-    
-    movie_ids = []
-    for rating_object in rating_objects:
-        movie_ids.append(rating_object.movie_id)
-
-        rating_object.movie.title
-
-    # for each rating object, find the movie_id, print name of movie for each movie_id 
 
     return render_template("user_info.html",
                             age=age,
                             zipcode=zipcode,
-                            user_object=user_object,
-                            rating_objects=rating_objects,
+                            rating_objects=rating_objects
                             )
 
 
