@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+   
+    <ul>
+    {% for rating in rating_objects %}
+        <li>{{ rating.score }}</li>
+    {% endfor %}
+    </ul>
+
+{% endblock %}
+
