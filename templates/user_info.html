@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    Age: {{ age }} <br>
+    Zipcode: {{ zipcode }} <br>
+
+    <ul>
+    {% for rating in rating_objects %}
+<!--         through foreign key -->
+        <li>{{ rating.movie.title }}; Score: {{ rating.score }}</li>
+    {% endfor %}
+    </ul>
+
+{% endblock %}
+
