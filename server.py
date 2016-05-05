@@ -3,7 +3,7 @@
 from jinja2 import StrictUndefined
 
 from flask import Flask, render_template, redirect, request, flash, session
-from flask_debugtoolbar import DebugToolbarExtension
+# from flask_debugtoolbar import DebugToolbarExtension
 
 from model import connect_to_db, db, User, Rating, Movie
 
@@ -25,12 +25,7 @@ def index():
     return render_template("homepage.html")
 
 
-@app.route('/users')
-def user_list():
-    """Show list of users."""
 
-    users = User.query.all()
-    return render_template("user_list.html", users=users)
 
 @app.route('/register')
 # displays a form that asks for username and password
@@ -118,6 +113,49 @@ def logout():
     flash("You've been logged out.")
     return redirect('/')
 
+@app.route('/movies')
+def movies():
+
+    # query of movie objects sorted by movie title
+    movie_objects = Movie.query.order_by(Movie.title).all()
+
+    # pass sorted list of movie objects to movies.html template
+    return render_template("movies.html",
+                            movie_objects=movie_objects)
+
+@app.route('/users')
+def user_list():
+    """Show list of users."""
+
+    users = User.query.all()
+    return render_template("user_list.html", users=users)
+
+
+@app.route('/users/<user_id>')
+def user_info(user_id):
+
+    user_object = User.query.get(user_id)
+    age = user_object.age
+    zipcode = user_object.zipcode
+
+    rating_objects = user_object.ratings
+    # [<rating object>,<rating object>,<rating object>]
+    
+    movie_ids = []
+    for rating_object in rating_objects:
+        movie_ids.append(rating_object.movie_id)
+
+        rating_object.movie.title
+
+    # for each rating object, find the movie_id, print name of movie for each movie_id 
+
+    return render_template("user_info.html",
+                            age=age,
+                            zipcode=zipcode,
+                            user_object=user_object,
+                            rating_objects=rating_objects,
+                            )
+
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the point
@@ -127,6 +165,6 @@ if __name__ == "__main__":
     connect_to_db(app)
 
     # Use the DebugToolbar
-    DebugToolbarExtension(app)
+    # DebugToolbarExtension(app)
 
     app.run()
