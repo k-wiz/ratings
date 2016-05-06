@@ -154,7 +154,46 @@ def movie_info(movie_id):
      # list of rating objects for a particular movie
     rating_objects = movie_object.ratings
 
-    return render_template("movie_info.html", movie_object=movie_object, rating_objects=rating_objects)
+    return render_template("movie_info.html", 
+                            movie_object=movie_object, 
+                            rating_objects=rating_objects
+                            )
+
+@app.route('/movie/<movie_id>/rating', methods=["POST"])
+def add_rating(movie_id):
+
+    print "got here!"
+    score = request.form.get("rating")
+    print score
+
+    user_id = session["user_id"]
+    print user_id
+
+    rating_obj = Rating.query.filter_by(movie_id=movie_id, user_id=user_id).first()
+
+    print rating_obj
+
+    if rating_obj:
+        #update rating in database
+        rating_obj.score = score
+        db.session.commit()
+    else:
+        #add rating in database
+        new_rating = Rating(movie_id=movie_id, 
+                            user_id=user_id, 
+                            score=score)
+
+        db.session.add(new_rating)
+
+        db.session.commit()
+
+
+    #rating object
+
+    return render_template("test.html")
+
+
+
 
 
 if __name__ == "__main__":
