@@ -176,7 +176,10 @@ def add_rating(movie_id):
     if rating_obj:
         #update rating in database
         rating_obj.score = score
+
         db.session.commit()
+        flash("Thanks for updating your rating!")
+
     else:
         #add rating in database
         new_rating = Rating(movie_id=movie_id, 
@@ -184,16 +187,10 @@ def add_rating(movie_id):
                             score=score)
 
         db.session.add(new_rating)
-
         db.session.commit()
+        flash("Thanks for your rating!")
 
-
-    #rating object
-
-    return render_template("test.html")
-
-
-
+    return redirect('/movies')
 
 
 if __name__ == "__main__":
