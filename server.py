@@ -169,7 +169,8 @@ def add_rating(movie_id):
     user_id = session["user_id"]
     print user_id
 
-    rating_obj = Rating.query.filter_by(movie_id=movie_id, user_id=user_id).first()
+    rating_obj = Rating.query.filter_by(movie_id=movie_id, 
+                                        user_id=user_id).first()
 
     print rating_obj
 
@@ -191,6 +192,8 @@ def add_rating(movie_id):
         flash("Thanks for your rating!")
 
     return redirect('/movies')
+    # how to redirect to page with dynamic url
+    # return redirect('/movies/' + movie_id)
 
 
 if __name__ == "__main__":
